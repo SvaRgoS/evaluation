@@ -14,7 +14,7 @@
 # start
 ./vendor/bin/sail up
 
-#stop
+# stop
 ./vendor/bin/sail down
 
 # container console
