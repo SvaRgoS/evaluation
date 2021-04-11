@@ -4,7 +4,6 @@ namespace App\Http\Requests\Auth;
 
 use App\Contracts\UsersPermissions;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class ProfileRequest extends FormRequest
@@ -16,12 +15,7 @@ class ProfileRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
-        if (!Auth::check()) {
-            return false;
-        }
-        die($this->request->get('id'), Auth::getUser()->id);
-        return Auth::user()->id == $this->id;
+        return auth('api')->user()->id == $this->request->get('id');
     }
 
     /**

@@ -13,25 +13,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['prefix' => 'auth', 'namespace' => '\App\Http\Controllers\Api\Auth'], function () {
-    Route::post(
-        'sign-in',
-        'SignInController@signIn'
-    );
-    Route::post(
-        'sign-up',
-        'SignUpController@signUp'
-    );
-});
-
-Route::group(['middleware' => 'auth:api', 'namespace' => '\App\Http\Controllers\Api'], function () {
-    Route::resource(
-        '/contact',
-        'ContactController'
-    );
-    Route::resource(
-        '/profile',
-        'ContactController'
-    )->only('update');
-});
-
+Route::group(
+    ['middleware' => 'api', 'namespace' => '\App\Http\Controllers\Api'],
+    function ($route) {
+        $route->group(['prefix' => 'auth'],
+            function () {
+                Route::post('sign-in', 'AuthController@signIn');
+                Route::post('sign-up', 'AuthController@signUp');
+                Route::get('sign-out', 'AuthController@signOut');
+                Route::get('refresh', 'AuthController@refresh');
+                Route::patch('profile/{user}', 'AuthController@update');
+            });
+        Route::resource('/contact', 'ContactController');
+    }
+);

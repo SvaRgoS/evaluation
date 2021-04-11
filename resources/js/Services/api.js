@@ -19,16 +19,22 @@ const API = {
             method: 'POST'
         })
     },
+    signOut: function () {
+        return axios({
+            url: `${apiHost}auth/sign-out`,
+            method: 'GET'
+        })
+    },
     getProfile: function (payload) {
         return axios({
-            url: `${apiHost}profile`,
+            url: `${apiHost}auth/profile`,
             method: 'GET'
         })
     },
     patchProfile: function (id, payload) {
         return axios({
-            url: `${apiHost}profile/${id}`,
-            data: payload, method: 'PUT'
+            url: `${apiHost}auth/profile/${id}`,
+            data: payload, method: 'PATCH'
         })
     }
 }
