@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Contracts\UsersPermissions;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -20,6 +21,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $email_verified_at
  * @property string $password
  * @property string|null $remember_token
+ * @property array|null $permissions
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read DatabaseNotificationCollection| DatabaseNotification[] $notifications
@@ -51,6 +53,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'permissions',
     ];
 
     /**
@@ -70,5 +73,23 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'permissions' => 'array'
     ];
+
+    /**
+     * @param $testPermission
+     * @return bool
+     */
+    public function hasPermission($testPermission): bool
+    {
+        return in_array($this->permissions, $testPermission);
+    }
+
+    /**
+     * Add a mutator to ensure hashed passwords
+     */
+    public function setPasswordAttribute($password)
+    {
+        $this->attributes['password'] = bcrypt($password);
+    }
 }

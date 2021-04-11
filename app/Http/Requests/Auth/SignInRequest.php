@@ -3,14 +3,8 @@
 namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 
-/**
- * @property string $email
- * @property string $password
- * @property string $token
- */
-class PasswordResetRequest extends FormRequest
+class SignInRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,7 +13,7 @@ class PasswordResetRequest extends FormRequest
      */
     public function authorize()
     {
-        return ! Auth::check();
+        return true;
     }
 
     /**
@@ -31,8 +25,7 @@ class PasswordResetRequest extends FormRequest
     {
         return [
             'email' => 'required|email',
-            'password' => 'required|min:8',
-            'token' => 'required',
+            'password' => 'required',
         ];
     }
 }

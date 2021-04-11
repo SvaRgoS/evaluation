@@ -24,7 +24,7 @@ const routes = [
     },
     {
         path: '/profile',
-        component: () => import('../Pages/Auth/Profile'),
+        component: () => import('../Pages/Profile'),
         name: 'profile'
     },
 ]

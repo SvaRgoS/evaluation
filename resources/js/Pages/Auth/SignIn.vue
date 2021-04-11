@@ -25,7 +25,7 @@ export default {
         login: function () {
             let email = this.email
             let password = this.password
-            this.$store.dispatch('login', {email, password})
+            this.$store.dispatch('signIn', {email, password})
                 .then(() => this.$router.push('/'))
                 .catch(err => console.log(err))
         }

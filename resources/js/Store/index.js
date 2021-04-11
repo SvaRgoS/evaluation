@@ -3,82 +3,94 @@ import Vuex from 'vuex'
 import axios from 'axios'
 import API from '../Services/api'
 
-console.log('API', API);
-
 Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         status: '',
-        token: localStorage.getItem('token') || '',
-        user : {}
+        user : localStorage.getItem('user'),
     },
     mutations: {
         auth_request(state){
             state.status = 'loading'
         },
-        auth_success(state, token, user){
+        auth_success(state, user){
+            const userDataSerialised = JSON.stringify(user);
+            localStorage.setItem('user', userDataSerialised);
             state.status = 'success'
-            state.token = token
             state.user = user
         },
         auth_error(state){
             state.status = 'error'
+            localStorage.removeItem('user')
         },
-        logout(state){
+        sign_out(state){
+            localStorage.removeItem('user')
             state.status = ''
-            state.token = ''
+            state.user = ''
         },
     },
     actions: {
-        login({commit}, user){
+        signIn({commit}, user){
             return new Promise((resolve, reject) => {
                 commit('auth_request')
                 API.signIn(user)
                     .then(resp => {
-                        const token = resp.data.token
-                        const user = resp.data.user
-                        localStorage.setItem('token', token)
-                        axios.defaults.headers.common['Authorization'] = token
-                        commit('auth_success', token, user)
+                        commit('auth_success', resp.data)
                         resolve(resp)
                     })
                     .catch(err => {
                         commit('auth_error')
-                        localStorage.removeItem('token')
                         reject(err)
                     })
             })
         },
-        register({commit}, user){
+        signUp({commit}, user){
             return new Promise((resolve, reject) => {
                 commit('auth_request')
                 API.signUp(user)
                     .then(resp => {
-                        const token = resp.data.token
-                        const user = resp.data.user
-                        localStorage.setItem('token', token)
-                        axios.defaults.headers.common['Authorization'] = token
-                        commit('auth_success', token, user)
+                        commit('auth_success', user)
                         resolve(resp)
                     })
                     .catch(err => {
                         commit('auth_error', err)
-                        localStorage.removeItem('token')
                         reject(err)
                     })
             })
         },
-        logout({commit}){
+        saveProfile({commit}, user){
             return new Promise((resolve, reject) => {
-                commit('logout')
-                localStorage.removeItem('token')
-                delete axios.defaults.headers.common['Authorization']
+                commit('auth_request')
+                console.log('usss', user);
+                API.patchProfile(user.id, user)
+                    .then(resp => {
+                        commit('auth_success', user)
+                        resolve(resp)
+                    })
+                    .catch(err => {
+                        commit('auth_error', err)
+                        reject(err)
+                    })
+            })
+        },
+        signOut({commit}){
+            return new Promise((resolve, reject) => {
+                commit('sign_out')
                 resolve()
             })
         }
     },
     getters : {
-        isLoggedIn: state => !!state.token,
+        isLoggedIn: (state, getters)  => !!getters.currentUser,
         authStatus: state => state.status,
+        currentUser: state => {
+            try {
+                console.log("CU", JSON.parse(state.user))
+                return JSON.parse(state.user)
+            }catch(e) {
+                console.error('Error user parsing user data', e)
+                return ''
+            }
+        }
     }
 })

@@ -5,7 +5,7 @@
                 <router-link :to="{ name: 'profile' }">Profile</router-link>
             </li>
             <li v-if="isLoggedIn">
-                <router-link :to="{ name: 'logout' }">Logout</router-link>
+                <a @click.prevent="signOut">Logout</a>
             </li>
             <li v-if="!isLoggedIn">
                 <router-link :to="{ name: 'sign-in' }">Sign In</router-link>
@@ -23,6 +23,11 @@ export default {
     computed: {
         isLoggedIn: function () {
             return this.$store.getters.isLoggedIn
+        }
+    },
+    methods: {
+        signOut: function () {
+            this.$store.dispatch('signOut')
         }
     },
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Contracts\UsersPermissions;
 use App\Http\Resources\ContactsCollectionResource;
 use App\Http\Resources\ContactsDetailResource;
 use App\Models\Contact;
@@ -9,9 +10,12 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ContactController extends BaseApiController
 {
+    use AuthorizesRequests;
+
     /**
      * Display a listing of the resource.
      *
@@ -19,6 +23,8 @@ class ContactController extends BaseApiController
      */
     public function index(): ContactsCollectionResource
     {
+        $this->authorize(UsersPermissions::READ, Contact::class);
+
         $contacts = Contact::all();
         return new ContactsCollectionResource($contacts);
     }
@@ -31,6 +37,8 @@ class ContactController extends BaseApiController
      */
     public function store(Request $request): ContactsDetailResource
     {
+        $this->authorize(UsersPermissions::WRITE, Contact::class);
+
         $contact = Contact::create($request->validated());
         return new ContactsDetailResource($contact);
     }
@@ -43,6 +51,8 @@ class ContactController extends BaseApiController
      */
     public function show(Contact $contact): ContactsDetailResource
     {
+        $this->authorize(UsersPermissions::READ, Contact::class);
+
         return new ContactsDetailResource($contact);
     }
 
@@ -55,6 +65,8 @@ class ContactController extends BaseApiController
      */
     public function update(Request $request, Contact $contact): ContactsDetailResource
     {
+        $this->authorize(UsersPermissions::WRITE, Contact::class);
+
         $contact->fill($request->except(['id']));
         $contact->save();
 
@@ -70,6 +82,8 @@ class ContactController extends BaseApiController
      */
     public function destroy(Contact $contact)
     {
+        $this->authorize(UsersPermissions::REMOVE, Contact::class);
+
         return response(null, $contact->delete() ? 204 : 500);
     }
 }

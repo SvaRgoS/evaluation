@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,14 +15,23 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'auth', 'namespace' => '\App\Http\Controllers\Api\Auth'], function () {
     Route::post(
-        'login',
-        'LoginController@login'
+        'sign-in',
+        'SignInController@signIn'
+    );
+    Route::post(
+        'sign-up',
+        'SignUpController@signUp'
     );
 });
 
-
-Route::middleware('auth:api')->resource(
-    '/contact',
-    \App\Http\Controllers\Api\ContactController::class
-);
+Route::group(['middleware' => 'auth:api', 'namespace' => '\App\Http\Controllers\Api'], function () {
+    Route::resource(
+        '/contact',
+        'ContactController'
+    );
+    Route::resource(
+        '/profile',
+        'ContactController'
+    )->only('update');
+});
 

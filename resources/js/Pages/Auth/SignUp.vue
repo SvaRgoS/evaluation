@@ -21,11 +21,11 @@
             </div>
             <label>Permissions</label>
             <div>
-                <input type="checkbox" id="read" value="read" v-model="permission">
+                <input type="checkbox" id="read" value="read" v-model="permissions">
                 <label for="read">Read</label>
-                <input type="checkbox" id="write" value="write" v-model="permission">
+                <input type="checkbox" id="write" value="write" v-model="permissions">
                 <label for="write">Write</label>
-                <input type="checkbox" id="remove" value="remove" v-model="permission">
+                <input type="checkbox" id="remove" value="remove" v-model="permissions">
                 <label for="remove">Remove</label>
             </div>
             <div>
@@ -44,7 +44,7 @@ export default {
             email: "",
             password: "",
             password_confirmation: "",
-            permission: []
+            permissions: []
         }
     },
     methods: {
@@ -53,9 +53,9 @@ export default {
                 name: this.name,
                 email: this.email,
                 password: this.password,
-                permission: this.permission
+                permissions: this.permissions
             }
-            this.$store.dispatch('register', data)
+            this.$store.dispatch('signUp', data)
                 .then(() => this.$router.push('/'))
                 .catch(err => console.log(err))
         }
