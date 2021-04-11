@@ -14,11 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['prefix' => 'auth', 'namespace' => '\App\Http\Controllers\Api\Auth'], function () {
+    Route::post(
+        'login',
+        'LoginController@login'
+    );
 });
 
-Route::middleware('api')->resource(
+
+Route::middleware('auth:api')->resource(
     '/contact',
     \App\Http\Controllers\Api\ContactController::class
 );

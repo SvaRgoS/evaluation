@@ -3,16 +3,18 @@ $font-color: #555555;
 body, html, #app, .app {
     padding: 0;
     margin: 0;
-    background-color: #e6e6e6;
+    background-color: #fff;
     text-align: center;
 }
 h1 {
     font-size: 10em;
     margin-top: 0;
 }
-.navBar {
-    padding: 5px;
-    background-color: #FFF;
+.topBar {
+     padding: 5px;
+     background-color: #FFF;
+ }
+.navBar, .userBar {
     &__link {
         display: flex;
         margin: 0;
@@ -24,8 +26,24 @@ h1 {
                 text-decoration: none;
                 color: #555555;
             }
+            .router-link-exact-active {
+                font-weight: bold;
+                text-decoration: underline;
+            }
         }
     }
+    nav li:hover,
+    nav li.router-link-active,
+    nav li.router-link-exact-active {
+        background-color: indianred;
+        cursor: pointer;
+    }
+}
+.navBar {
+    float:left;
+}
+.userBar {
+    float:right;
 }
 button {
     padding: 10px;
