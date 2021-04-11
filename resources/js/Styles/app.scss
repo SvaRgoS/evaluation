@@ -1,70 +1,12 @@
-$font-color: #555555;
+// Define variable defaults
+$body-bg: #000;
+$body-color: #111;
 
-body, html, #app, .app {
-    padding: 0;
+@import 'node_modules/bootstrap/scss/bootstrap.scss';
+@import 'node_modules/bootstrap-vue/src/index.scss';
+
+body {
     margin: 0;
-    background-color: #fff;
-    text-align: center;
+    background: #abdde5;
 }
-h1 {
-    font-size: 10em;
-    margin-top: 0;
-}
-.topBar {
-     padding: 5px;
-     background-color: #FFF;
- }
-.navBar, .userBar {
-    &__link {
-        display: flex;
-        margin: 0;
-        li {
-            margin: 10px;
-            list-style-type: none;
-            font-size: 17px;
-            a {
-                text-decoration: none;
-                color: #555555;
-            }
-            .router-link-exact-active {
-                font-weight: bold;
-                text-decoration: underline;
-            }
-        }
-    }
-    nav li:hover,
-    nav li.router-link-active,
-    nav li.router-link-exact-active {
-        background-color: indianred;
-        cursor: pointer;
-    }
-}
-.navBar {
-    float:left;
-}
-.userBar {
-    float:right;
-}
-button {
-    padding: 10px;
-    background-color: #FFF;
-    border: 1px solid $font-color;
-    color: $font-color;
-    cursor: pointer;
-    outline: none;
-    width: 200px;
-}
-button:hover {
-    background-color: #000;
-    color: #FFF;
-}
-
-.notify {
-    position: absolute;
-    width: 100%;
-    text-align: center;
-    bottom: 10px;
-    font-size: 130%;
-    background: whitesmoke;
-}
-
+li {list-style: none;}

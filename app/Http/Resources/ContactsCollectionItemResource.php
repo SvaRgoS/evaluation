@@ -20,7 +20,7 @@ class ContactsCollectionItemResource extends JsonResource
          */
         return [
             'id' => $this->id,
-            'name' => `{$this->first_name} {$this->last_name}`,
+            'name' => $this->first_name . ' ' . $this->last_name,
             'description' => $this->description,
             'phone' => $this->phone
         ];

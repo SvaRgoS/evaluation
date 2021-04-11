@@ -14,15 +14,6 @@ use Illuminate\Http\Response;
 
 class AuthController extends BaseApiController
 {
-    /**
-     * Create a new AuthController instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('api', ['except' => ['signIn', 'signUp']]);
-    }
 
     /**
      * Handle an authentication attempt.
@@ -34,7 +25,7 @@ class AuthController extends BaseApiController
     {
         $credentials = $request->only(['email', 'password']);
 
-        if (!$token = auth('api')->attempt($credentials)) {
+        if (!$token = auth()->attempt($credentials)) {
             return response()->json(['message' => 'Unauthorized'], Response::HTTP_FORBIDDEN);
         }
         return $this->createNewToken($token);
@@ -52,8 +43,8 @@ class AuthController extends BaseApiController
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth('api')->factory()->getTTL() * 60,
-            'user' => new ProfileDetailResource(auth('api')->user())
+            'expires_in' => auth()->factory()->getTTL() * 60,
+            'user' => new ProfileDetailResource(auth()->user())
         ]);
     }
 
@@ -98,7 +89,7 @@ class AuthController extends BaseApiController
      */
     public function refresh(): JsonResponse
     {
-        return $this->createNewToken(auth('api')->refresh());
+        return $this->createNewToken(auth()->refresh());
     }
 
     /**

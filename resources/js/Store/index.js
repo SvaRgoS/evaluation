@@ -75,13 +75,13 @@ export default new Vuex.Store({
                 commit('auth_request')
                 API.signUp(user)
                     .then(resp => {
-                        commit('message_new', resp.data.message)
+                        commit('message_new', resp.message)
                         setTimeout(() => commit('message_clear'), 3000)
                         resolve(resp)
                     })
-                    .catch(err => {
-                        commit('auth_error', err)
-                        commit('message_new', err)
+                    .catch((err) => {
+                        commit('auth_error')
+                        commit('message_new', 'Error: Something wrong! Call to site admin!')
                         setTimeout(() => commit('message_clear'), 3000)
                         reject(err)
                     })

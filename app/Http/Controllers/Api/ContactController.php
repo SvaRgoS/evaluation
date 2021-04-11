@@ -17,6 +17,16 @@ class ContactController extends BaseApiController
     use AuthorizesRequests;
 
     /**
+     * Create a new AuthController instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('api');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return ContactsCollectionResource
@@ -39,7 +49,7 @@ class ContactController extends BaseApiController
     {
         $this->authorize(UsersPermissions::WRITE, Contact::class);
 
-        $contact = Contact::create($request->validated());
+        $contact = Contact::create($request->all());
         return new ContactsDetailResource($contact);
     }
 

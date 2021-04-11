@@ -6,8 +6,25 @@ const routes = [
     },
     {
         path: '/contacts',
-        component: () => import('../Pages/Contacts'),
+        component: () => import('../Pages/ContactsList'),
         name: 'contacts',
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        path: '/contacts/add',
+        component: () => import('../Pages/ContactsEdit'),
+        name: 'contacts-add',
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        path: '/contacts/:id',
+        component: () => import('../Pages/ContactsEdit'),
+        name: 'contacts-edit',
+        props: true,
         meta: {
             requiresAuth: true
         }

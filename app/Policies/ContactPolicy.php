@@ -17,7 +17,7 @@ class ContactPolicy
      * @param User $user
      * @return mixed
      */
-    public function viewAny(User $user)
+    public function read(User $user)
     {
         return $user->hasPermission(UsersPermissions::READ);
     }
@@ -29,30 +29,7 @@ class ContactPolicy
      * @param Contact $contact
      * @return mixed
      */
-    public function view(User $user, Contact $contact)
-    {
-        return $user->hasPermission(UsersPermissions::READ);
-    }
-
-    /**
-     * Determine whether the user can create models.
-     *
-     * @param User $user
-     * @return mixed
-     */
-    public function create(User $user)
-    {
-        return $user->hasPermission(UsersPermissions::WRITE);
-    }
-
-    /**
-     * Determine whether the user can update the model.
-     *
-     * @param User $user
-     * @param Contact $contact
-     * @return mixed
-     */
-    public function update(User $user, Contact $contact)
+    public function write(User $user)
     {
         return $user->hasPermission(UsersPermissions::WRITE);
     }
@@ -64,31 +41,7 @@ class ContactPolicy
      * @param Contact $contact
      * @return mixed
      */
-    public function delete(User $user, Contact $contact)
-    {
-        return $user->hasPermission(UsersPermissions::REMOVE);
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     *
-     * @param User $user
-     * @param Contact $contact
-     * @return mixed
-     */
-    public function restore(User $user, Contact $contact)
-    {
-        return $user->hasPermission(UsersPermissions::REMOVE);
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     *
-     * @param User $user
-     * @param Contact $contact
-     * @return mixed
-     */
-    public function forceDelete(User $user, Contact $contact)
+    public function remove(User $user)
     {
         return $user->hasPermission(UsersPermissions::REMOVE);
     }

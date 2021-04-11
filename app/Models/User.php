@@ -84,7 +84,7 @@ class User extends Authenticatable implements JWTSubject
      */
     public function hasPermission($testPermission): bool
     {
-        return in_array($this->permissions, $testPermission);
+        return in_array($testPermission, $this->permissions);
     }
 
     /**
