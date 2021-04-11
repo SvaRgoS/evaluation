@@ -3,9 +3,9 @@
 Please create a simple Laravel Application to Create, View, and
 Delete contacts. Given the below table definition for contacts build a Laravel app that:
 
-- [ ] Creates a contact table as per the below spec.
-- [ ] Populates the contacts table with sample data via a seeder script.
-- [ ] Exposes a RESTful API to perform listing and CRUD operations on the contacts table.
+- [X] Creates a contact table as per the below spec.
+- [X] Populates the contacts table with sample data via a seeder script.
+- [X] Exposes a RESTful API to perform listing and CRUD operations on the contacts table.
 - [ ] Sends an email notification when a contact is deleted to a configurable email address.
 
 - [ ] Enforces that actions can only be performed by authenticated users with a certain roles:
