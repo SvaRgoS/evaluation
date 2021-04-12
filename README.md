@@ -4,6 +4,8 @@
   - rename ```.env.example``` to ```.env```
   - run ```composer install```
   - run ```./vendor/bin/sail up```
+  - run ```./vendor/bin/sail migrate```
+  - run ```./vendor/bin/sail db:seed```
 ---
 - http://localhost/ - mainpage
 - http://localhost:8025/ - MailHog

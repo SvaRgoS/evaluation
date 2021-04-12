@@ -58,12 +58,14 @@ export default {
     },
     computed: {
         canEdit: function(){
+
             return this.usersPermissions.includes('write')
         },
         canRemove: function(){
             return this.usersPermissions.includes('remove')
         },
         usersPermissions: function() {
+            console.log('CP', this.$store.getters.currentUser.permissions);
             return this.$store.getters.currentUser.permissions
         }
     },

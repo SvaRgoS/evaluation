@@ -12,8 +12,8 @@ class ProfileDetailResource extends JsonResource
     {
         $result =  parent::toArray($request);
         $result['id'] = $this->id;
+        $result['permissions'] = $this->permissions;
         return $result;
     }
-
 }
 

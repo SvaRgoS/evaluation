@@ -60,22 +60,19 @@
                     </b-form-group>
 
                     <b-form-group
-                        label="Check permissions:"
-                        label-for="input-permissions"
+                        label="Select the role:"
+                        label-for="input-role"
                     >
-                        <b-form-checkbox-group
-                            id="checkbox-group-2"
-                            v-model="permissions"
-                            name="flavour-2"
-                        >
-                            <b-form-checkbox value="read">Read</b-form-checkbox>
-                            <b-form-checkbox value="write">Write</b-form-checkbox>
-                            <b-form-checkbox value="Remove">Remove</b-form-checkbox>
-                        </b-form-checkbox-group>
+                        <b-form-select id="input-role"
+                                       v-model="role_id"
+                                       :options="options"
+                                       class="mt-3"
+                                       size="sm">
+                        </b-form-select>
                     </b-form-group>
 
                     <hr/>
-                    <b-button type="reset"  @click.prevent="$router.go(-1)" variant="warning">Cancel</b-button>
+                    <b-button type="reset" variant="warning" @click.prevent="$router.go(-1)">Cancel</b-button>
                     <b-button type="submit" variant="primary">Submit</b-button>
                 </b-form>
             </main>
@@ -93,7 +90,12 @@ export default {
             email: "",
             password: "",
             password_confirmation: "",
-            permissions: []
+            role_id: "1",
+            options: {
+                1: 'Reader',
+                2: 'Writer',
+                3: 'Redactor'
+            },
         }
     },
     methods: {
@@ -101,6 +103,7 @@ export default {
             let data = {
                 name: this.name,
                 email: this.email,
+                role_id: this.role_id,
                 password: this.password,
                 permissions: this.permissions
             }

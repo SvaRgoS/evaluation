@@ -27,14 +27,7 @@ class ProfileRequest extends FormRequest
     {
         return [
             'name' => 'required|min:3|max:25',
-            "permissions" => "required|array|min:1|max:3",
-            "permissions.*" => ['required', 'string',
-                Rule::in([
-                    UsersPermissions::READ,
-                    UsersPermissions::WRITE,
-                    UsersPermissions::REMOVE
-                ])
-            ],
+            "role_id" => "required|min:1|max:3",
         ];
     }
 }

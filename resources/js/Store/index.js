@@ -80,7 +80,6 @@ export default new Vuex.Store({
                         resolve(resp)
                     })
                     .catch((err) => {
-                        commit('auth_error')
                         commit('message_new', 'Error: Something wrong! Call to site admin!')
                         setTimeout(() => commit('message_clear'), 3000)
                         reject(err)
@@ -96,14 +95,12 @@ export default new Vuex.Store({
                         resolve(resp)
                     })
                     .catch(err => {
-                        commit('auth_error', err)
                         reject(err)
                     })
             })
         },
         signOut({commit}) {
             return new Promise((resolve, reject) => {
-                commit('sign_out')
                 API.signOut()
                     .then(resp => {
                         commit('sign_out')
@@ -112,7 +109,6 @@ export default new Vuex.Store({
                         resolve(resp)
                     })
                     .catch(err => {
-                        commit('auth_error', err)
                         commit('message_new', 'Error when sign out!')
                         setTimeout(() => commit('message_clear'), 3000)
                         reject(err)

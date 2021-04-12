@@ -79,6 +79,7 @@ class AuthController extends BaseApiController
     {
         $user->fill($request->except(['id']));
         $user->save();
+        auth()->setUser($user);
         return $this->refresh();
     }
 

@@ -6,13 +6,13 @@ use Database\Factories\UserFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Tymon\JWTAuth\Contracts\JWTSubject;
-
 
 /**
  * App\Models\User
@@ -23,11 +23,12 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property Carbon|null $email_verified_at
  * @property string $password
  * @property string|null $remember_token
- * @property array|null $permissions
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property-read DatabaseNotificationCollection| DatabaseNotification[] $notifications
+ * @property int|null $role_id
+ * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
+ * @property-read Role|null $role
  * @method static UserFactory factory(...$parameters)
  * @method static Builder|User newModelQuery()
  * @method static Builder|User newQuery()
@@ -39,6 +40,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @method static Builder|User whereName($value)
  * @method static Builder|User wherePassword($value)
  * @method static Builder|User whereRememberToken($value)
+ * @method static Builder|User whereRoleId($value)
  * @method static Builder|User whereUpdatedAt($value)
  * @mixin Eloquent
  */
@@ -55,7 +57,7 @@ class User extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
-        'permissions',
+        'role_id'
     ];
 
     /**
@@ -78,13 +80,31 @@ class User extends Authenticatable implements JWTSubject
         'permissions' => 'array'
     ];
 
+    protected $appends = [
+        'permissions',
+    ];
+
+    /**
+     * @return HasOne
+     */
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
     /**
      * @param $testPermission
      * @return bool
      */
     public function hasPermission($testPermission): bool
     {
-        return in_array($testPermission, $this->permissions);
+        $foundedPermission = $this->role->permissions()->where('name', '=', $testPermission)->pluck('name');
+        return $foundedPermission->count() > 0;
+    }
+
+    public function getPermissionsAttribute()
+    {
+        return $this->role->permissions()->pluck('name');
     }
 
     /**

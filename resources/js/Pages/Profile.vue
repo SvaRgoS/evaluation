@@ -20,18 +20,15 @@
                     </b-form-group>
 
                     <b-form-group
-                        label="Check permissions:"
-                        label-for="input-permissions"
+                        label="Select the role:"
+                        label-for="input-role"
                     >
-                        <b-form-checkbox-group
-                            id="checkbox-group-2"
-                            v-model="permissions"
-                            name="flavour-2"
-                        >
-                            <b-form-checkbox value="read">Read</b-form-checkbox>
-                            <b-form-checkbox value="write">Write</b-form-checkbox>
-                            <b-form-checkbox value="remove">Remove</b-form-checkbox>
-                        </b-form-checkbox-group>
+                        <b-form-select id="input-role"
+                                       v-model="role_id"
+                                       :options="options"
+                                       class="mt-3"
+                                       size="sm">
+                        </b-form-select>
                     </b-form-group>
 
                     <hr/>
@@ -50,20 +47,25 @@ export default {
     data() {
         return {
             name: "",
-            permissions: []
+            role_id: "",
+            options: {
+                1: 'Reader',
+                2: 'Writer',
+                3: 'Redactor'
+            },
         }
     },
     computed: {
         currentUser: function () {
             return this.$store.getters.currentUser
-        }
+        },
     },
     methods: {
         save: function () {
             let data = {
                 id: this.currentUser.id,
                 name: this.name,
-                permissions: this.permissions
+                role_id: this.role_id
             }
 
             this.$store.dispatch('saveProfile', data)
@@ -73,7 +75,7 @@ export default {
     },
     mounted() {
         this.name = this.currentUser.name;
-        this.permissions = this.currentUser.permissions;
+        this.role_id = this.currentUser.role_id;
     }
 }
 </script>
