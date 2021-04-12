@@ -4,10 +4,16 @@
   - rename ```.env.example``` to ```.env```
   - run ```composer install```
   - run ```./vendor/bin/sail up```
-  - run ```./vendor/bin/sail migrate```
-  - run ```./vendor/bin/sail db:seed```
+  - open another console and run ```./vendor/bin/sail artisan migrate --seed```
+  - wait for the message "Starting Laravel development server: http://0.0.0.0:80
+    " in the console
+  - open  http://localhost/
+  - Sign Up
+  - Sign In
+  - Check Application
+
 ---
-- http://localhost/ - mainpage
+- http://localhost/ - main page
 - http://localhost:8025/ - MailHog
 
 
