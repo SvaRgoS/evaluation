@@ -3,10 +3,10 @@
 # Setup
   - run ```composer install```
   - run ```./vendor/bin/sail up```
-  - open another console and run ```./vendor/bin/sail artisan migrate --seed```
   - wait for the message "Starting Laravel development server: http://0.0.0.0:80
     " in the console
-  - open  http://localhost/
+  - open another console and run ```./vendor/bin/sail artisan migrate --seed```
+  - open http://localhost/
   - Sign Up
   - Sign In
   - Check Application
