@@ -9,6 +9,10 @@ use Illuminate\Database\Seeder;
 
 class RoleSeeder extends Seeder
 {
+    const ROLE_READER = 1;
+    const ROLE_WRITER = 2;
+    const ROLE_REDACTOR = 3;
+
     /**
      * Run the database seeds.
      *
@@ -19,6 +23,7 @@ class RoleSeeder extends Seeder
         if ($this->rolesExist()) {
             return;
         }
+
         $roles = [
             'Reader' => [
                 PermissionSeeder::PERMISSION_READ_ID,

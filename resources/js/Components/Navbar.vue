@@ -4,7 +4,7 @@
             <b-nav-item href="#">
                 <router-link class="text-white" :to="{ name: 'home' }">Home</router-link>
             </b-nav-item>
-            <b-nav-item href="#">
+            <b-nav-item v-if="isLoggedIn" href="#">
                 <router-link class="text-white" :to="{ name: 'contacts' }">Contacts</router-link>
             </b-nav-item>
         </b-navbar-nav>

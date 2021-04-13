@@ -23,6 +23,12 @@ class DatabaseSeeder extends Seeder
         );
 
         User::factory(13)->create();
+        User::create([
+            'name' => 'Testing User',
+            'email' => env('API_USER_EMAIL'),
+            'password' => env('API_USER_PASSWORD'),
+            'role_id' => RoleSeeder::ROLE_REDACTOR
+        ]);
 
         if (Contact::all()->count() === 0) {
             Contact::factory(13)->create();

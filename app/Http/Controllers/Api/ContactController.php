@@ -6,11 +6,13 @@ use App\Contracts\UsersPermissions;
 use App\Http\Resources\ContactsCollectionResource;
 use App\Http\Resources\ContactsDetailResource;
 use App\Models\Contact;
+use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ContactController extends BaseApiController
 {
@@ -71,16 +73,17 @@ class ContactController extends BaseApiController
      *
      * @param Request $request
      * @param Contact $contact
-     * @return ContactsDetailResource
+     * @return Response
+     * @throws AuthorizationException
      */
-    public function update(Request $request, Contact $contact): ContactsDetailResource
+    public function update(Request $request, Contact $contact): Response
     {
         $this->authorize(UsersPermissions::WRITE, Contact::class);
 
         $contact->fill($request->except(['id']));
         $contact->save();
 
-        return new ContactsDetailResource($contact);
+        return response(new ContactsDetailResource($contact));
     }
 
     /**
@@ -88,12 +91,16 @@ class ContactController extends BaseApiController
      *
      * @param Contact $contact
      * @return Application|ResponseFactory|Response
-     * @throws \Exception
+     * @throws Exception
      */
     public function destroy(Contact $contact)
     {
         $this->authorize(UsersPermissions::REMOVE, Contact::class);
 
-        return response(null, $contact->delete() ? 204 : 500);
+        return response(null,
+            $contact->delete()
+                ? Response::HTTP_NO_CONTENT
+                : Response::HTTP_INTERNAL_SERVER_ERROR
+        );
     }
 }
