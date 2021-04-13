@@ -1,7 +1,6 @@
 # Laravel + Vue Evaluation Task: Contact List
 
 # Setup
-  - rename ```.env.example``` to ```.env```
   - run ```composer install```
   - run ```./vendor/bin/sail up```
   - run ```./vendor/bin/sail migrate```

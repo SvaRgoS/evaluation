@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Contact;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,13 +15,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // User::factory(3)->create();
-        Contact::factory(13)->create();
         $this->call(
             [
                 PermissionSeeder::class,
                 RoleSeeder::class,
             ]
         );
+
+        User::factory(13)->create();
+
+        if (Contact::all()->count() === 0) {
+            Contact::factory(13)->create();
+        }
+
     }
 }

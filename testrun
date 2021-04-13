@@ -1,0 +1,4 @@
+!/bin/bash
+php artisan migrate:rollback --env=testing
+php artisan migrate --env=testing --seed
+vendor/bin/phpunit

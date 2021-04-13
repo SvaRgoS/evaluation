@@ -16,6 +16,9 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
+        if ($this->rolesExist()) {
+            return;
+        }
         $roles = [
             'Reader' => [
                 PermissionSeeder::PERMISSION_READ_ID,
@@ -37,5 +40,13 @@ class RoleSeeder extends Seeder
             ]);
             $model->permissions()->sync($permission);
         }
+    }
+
+    /**
+     * @return bool
+     */
+    protected function rolesExist(): bool
+    {
+        return Role::whereName('Redactor')->exists();
     }
 }

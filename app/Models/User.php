@@ -22,6 +22,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property string $email
  * @property Carbon|null $email_verified_at
  * @property string $password
+ * @property array $permissions
  * @property string|null $remember_token
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -132,6 +133,8 @@ class User extends Authenticatable implements JWTSubject
      */
     public function getJWTCustomClaims()
     {
-        return [];
+        return [
+            'id' => $this->id
+        ];
     }
 }
